@@ -1,0 +1,97 @@
+.empTaskBg{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 20px 0px;
+}
+
+.taskInp{
+    border: 1px solid rgba(128, 128, 128, 0.349);
+    border-radius: 6px;
+    margin-left: 10px;
+    margin-top: -4px;
+    width: 80%;
+    padding: 5px 15px;
+}
+
+.assignBtn{
+    padding: 7px 20px;
+    background-color: #06c3fc;
+    color: white;
+    margin-left: 10px ;
+    border-radius: 5px;
+    margin-top: -4px;
+}
+.assignBtn:hover{
+    background-color: #06c3fca1;
+    transition: all 1000ms;
+}
+
+.empName{
+    width: 100px;
+    font-size: 18px !important;
+}
+
+
+.optionP{
+    background-color: aquamarine;
+    border-radius: 100px;
+    width: 80%;
+    display: inline-block;
+    cursor: pointer;
+}
+.optionPl{
+    background-color:lightcyan;
+    border-radius: 100px;
+    width: 80%;
+    display: inline-block;
+    cursor: pointer;
+
+}
+.optionA{
+    background-color:lightcoral;
+    border-radius: 100px;
+    width: 80%;
+    display: inline-block;
+    cursor: pointer;
+
+}
+.optionl{
+    background-color: lightgoldenrodyellow;
+    border-radius: 100px;
+    width: 80%;
+    display: inline-block;
+    cursor: pointer;
+
+}
+
+
+.submitBtn{
+    padding: 7px 20px;
+    background-color: #06c3fc;
+    color: white;
+    border-radius: 5px;
+}
+
+
+
+
+
+
+
+@media screen and (max-width: 500px) {
+
+    .empTaskBg{
+        flex-direction: column;
+        margin: 30px 0px;
+    }
+
+    .assignBtn{
+        margin-top: 10px;
+    }
+
+    .taskInp{
+        width: 100%;
+    }
+    
+}
