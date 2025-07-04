@@ -1,4 +1,6 @@
 import Leave from "../models/leave.js";
+import Notice from "../models/notification.js";
+import User from "../models/user.js";
 
 export const addLeave = async (req, res) => {
     try {
@@ -22,6 +24,19 @@ export const addLeave = async (req, res) => {
         });
 
         await newLeave.save();
+
+        // create notification for admins
+        try {
+            const admins = await User.find({ role: 'admin' }).select('_id');
+            const adminIds = admins.map((admin) => admin._id);
+            const applyUser = await User.findById(userId).select('name');
+            const text = `${applyUser?.name || 'An employee'} applied for ${leaveType} from ${new Date(fromDate).toLocaleDateString()} to ${new Date(toDate).toLocaleDateString()}.`;
+            if (adminIds.length) {
+                await Notice.create({ team: adminIds, text });
+            }
+        } catch (e) {
+            console.error('Error creating leave notification:', e);
+        }
 
         return res.status(201).json({ success: true, message: "Leave added successfully", newLeave });
     } catch (error) {
@@ -65,6 +80,14 @@ export const updateLeave = async (req, res) => {
 
         if (!updatedLeave) {
             return res.status(404).json({ success: false, message: "Leave not found" });
+        }
+
+        // notify user about status update
+        try {
+            const text = `Your leave request from ${new Date(updatedLeave.fromDate).toLocaleDateString()} to ${new Date(updatedLeave.toDate).toLocaleDateString()} has been ${status.toLowerCase()}.`;
+            await Notice.create({ team: [updatedLeave.userId], text });
+        } catch (e) {
+            console.error('Error creating leave status notification:', e);
         }
 
         return res.status(200).json({ success: true, message: "Leave status updated successfully", updatedLeave });
